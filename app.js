@@ -1,3 +1,5 @@
+// ===== Storage Keys =====
+const NEWS_KEY = "ihave_news_items";
 // =========================================================
 // DEFAULT NEWS (ไม่งอกมั่ว / ไม่เขียนทับ localStorage)
 // =========================================================
@@ -161,3 +163,4 @@ function setNews(list) {
 
   if (changed) setNews(fixed);
 })();
+
