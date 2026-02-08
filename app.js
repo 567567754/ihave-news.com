@@ -1,6 +1,8 @@
 console.log("app.js RUNNING ✅");
 
 (function () {
+  "use strict";
+
   const $ = (s) => document.querySelector(s);
 
   // ===== Storage Keys =====
@@ -147,7 +149,6 @@ console.log("app.js RUNNING ✅");
   // DEFAULT NEWS (โชว์ได้ แต่ไม่เขียนลง localStorage)
   // =========================================================
   const DEFAULT_NEWS = [
-    // TECH
     {
       id: 900101,
       title: "GPU ราคาลงจริง? รุ่นกลางเริ่มหลุด MSRP",
@@ -170,8 +171,6 @@ console.log("app.js RUNNING ✅");
       heroId: "",
       time: ""
     },
-
-    // GAME
     {
       id: 900201,
       title: "แพตช์ใหม่ยิงปืน: รีคอยล์โดนเนิร์ฟ/บัฟแบบยกชุด",
@@ -194,8 +193,6 @@ console.log("app.js RUNNING ✅");
       heroId: "",
       time: ""
     },
-
-    // SPORT
     {
       id: 900301,
       title: "เกมเดือดเมื่อคืน: พลิกท้ายเกมแบบโคตรช็อก",
@@ -218,8 +215,6 @@ console.log("app.js RUNNING ✅");
       heroId: "",
       time: ""
     },
-
-    // ARTICLES
     {
       id: 900401,
       title: "RTX 50 Series ก้าวกระโดด GPU ยุคใหม่",
@@ -266,8 +261,6 @@ console.log("app.js RUNNING ✅");
   // =========================================================
   function getNews() {
     const rawStr = localStorage.getItem(NEWS_KEY);
-
-    // ✅ ยังไม่เคยมีข่าวของผู้ใช้เลย → โชว์ default (แต่ "ไม่เขียนลง localStorage")
     if (!rawStr) return withDefaultTime(DEFAULT_NEWS).slice();
 
     const raw = safeParseJSON(rawStr, []);
@@ -300,13 +293,19 @@ console.log("app.js RUNNING ✅");
   })();
 
   // =========================================================
-  // Featured / delete
+  // Featured / delete (ทำกับ "ข่าวจริงใน localStorage" เท่านั้น)
   // =========================================================
+  function getStoredNewsRaw() {
+    const rawStr = localStorage.getItem(NEWS_KEY);
+    if (!rawStr) return [];
+    const raw = safeParseJSON(rawStr, []);
+    return Array.isArray(raw) ? raw : [];
+  }
+
   window.deleteNews = function (id) {
     if (!confirm("ลบข่าวนี้จริงไหม?")) return;
-    const list = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []).filter(
-      (item) => Number(item.id) !== Number(id)
-    );
+
+    const list = getStoredNewsRaw().filter((item) => Number(item.id) !== Number(id));
     setNews(list);
 
     const fid = Number(localStorage.getItem(FEATURED_KEY) || 0);
@@ -318,6 +317,15 @@ console.log("app.js RUNNING ✅");
   window.setFeatured = function (id) {
     localStorage.setItem(FEATURED_KEY, String(Number(id)));
     alert("ตั้งเป็นข่าวเด่นแล้ว ⭐");
+    location.reload();
+  };
+
+  // (Optional) ปุ่มล้างข่าวจริงทั้งระบบ
+  window.clearStoredNews = function () {
+    if (!confirm("ล้างข่าวที่เพิ่มเองทั้งหมดจริงไหม?")) return;
+    localStorage.removeItem(NEWS_KEY);
+    localStorage.removeItem(FEATURED_KEY);
+    alert("ล้างข่าวในระบบแล้ว ✅ (ยังโชว์ default ได้เหมือนเดิม)");
     location.reload();
   };
 
@@ -335,12 +343,11 @@ console.log("app.js RUNNING ✅");
     let cls = "";
     if (tn === "hot") cls = "hot";
     else if (tn === "new") cls = "new";
-    else cls = "new"; // ART หรืออื่นๆ ใช้โทน new ไปก่อน
+    else cls = "new";
     const label = t ? t.toUpperCase() : "NEW";
     return `<span class="overlay-tag ${cls}">${escapeHTML(label)}</span>`;
   }
 
-  // ✅ ใส่ nid ให้ลิงก์ (ไว้แยกคอมเมนต์แต่ละข่าว)
   function linkWithNid(link, nid) {
     const href = String(link || "#");
     if (href === "#" || !nid) return href;
@@ -349,19 +356,15 @@ console.log("app.js RUNNING ✅");
     return `${href}${join}nid=${encodeURIComponent(String(nid))}`;
   }
 
-  // ===== Card =====
   function makeCard(item) {
     const a = document.createElement("a");
     a.className = "news";
     a.href = linkWithNid(item.link || "#", item.id);
 
     const map = getHeroMap();
-
-    // ✅ รูป: img (ลิงก์ตรง) → heroId (จาก gallery) → ไม่มีรูป
     const img = item.img || ((item.heroId && map[item.heroId]) ? map[item.heroId] : null);
 
     const tagBadge = overlayTagHTML(item.tag);
-
     const thumbHTML = img
       ? `<div class="thumb">${tagBadge}<img src="${escapeHTML(img)}" alt="thumb"></div>`
       : `<div class="thumb">${tagBadge}</div>`;
@@ -401,7 +404,6 @@ console.log("app.js RUNNING ✅");
     arr.forEach((item) => el.appendChild(makeCard(item)));
   }
 
-  // ===== Render lists (category pages) =====
   function renderNews() {
     const all = getNews();
     fillList(listHome, all, "ยังไม่มีข่าว");
@@ -411,14 +413,13 @@ console.log("app.js RUNNING ✅");
     fillList(listArticle, all.filter((x) => norm(x.category) === "article"), "ยังไม่มีบทความ");
   }
 
-  // ===== Featured (index) =====
   function pickFeatured(all) {
     const fid = Number(localStorage.getItem(FEATURED_KEY) || 0);
     if (fid) {
       const found = all.find((x) => Number(x.id) === fid);
       if (found) return found;
     }
-    return all.length ? all[all.length - 1] : null; // fallback ข่าวล่าสุด
+    return all.length ? all[all.length - 1] : null;
   }
 
   function renderFeatured() {
@@ -484,7 +485,6 @@ console.log("app.js RUNNING ✅");
     `;
   }
 
-  // ===== Latest (index) =====
   function renderLatest() {
     const list = $("#latestList");
     if (!list) return;
@@ -498,7 +498,6 @@ console.log("app.js RUNNING ✅");
     items.forEach((item) => list.appendChild(makeCard(item)));
   }
 
-  // ===== Shortcuts (index right) =====
   function renderShortcuts() {
     const box = $("#shortcutList");
     if (!box) return;
@@ -521,7 +520,6 @@ console.log("app.js RUNNING ✅");
     if (sport) box.appendChild(makeCard(sport));
   }
 
-  // ===== All News page (filter + pagination lite) =====
   function renderAllPage() {
     const list = $("#allList");
     if (!list) return;
@@ -729,7 +727,7 @@ console.log("app.js RUNNING ✅");
   const addForm = $("#addNewsForm");
   const adminList = $("#adminNewsList");
 
-  const ADMIN_PASSWORD = "1234"; // 👈 เปลี่ยนได้
+  const ADMIN_PASSWORD = "1234";
 
   function updateAdminUI() {
     const ok = isAdmin();
@@ -766,13 +764,17 @@ console.log("app.js RUNNING ✅");
     if (!adminList) return;
     if (!isAdmin()) return;
 
-    const raw = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []);
-    const all = Array.isArray(raw) ? raw.slice().reverse() : [];
+    const all = getStoredNewsRaw().slice().reverse();
     adminList.innerHTML = "";
 
     if (!all.length) {
-      adminList.innerHTML = `<div class="tag">ยังไม่มีข่าวใน localStorage</div>
-      <div class="meta" style="margin-top:8px;">* ค่า default ที่โชว์หน้าเว็บ “ไม่ถือว่าเป็นข่าวในระบบ” จนกว่าจะเพิ่มผ่าน Admin</div>`;
+      adminList.innerHTML = `
+        <div class="tag">ยังไม่มีข่าวใน localStorage</div>
+        <div class="meta" style="margin-top:8px;">
+          * ค่า default ที่โชว์หน้าเว็บ “ไม่ถือว่าเป็นข่าวในระบบ” จนกว่าจะเพิ่มผ่าน Admin
+        </div>
+        <button class="tag" type="button" style="margin-top:10px;" onclick="window.clearStoredNews()">ล้างข่าวในระบบ</button>
+      `;
       return;
     }
 
@@ -802,13 +804,15 @@ console.log("app.js RUNNING ✅");
       const link = ($("#nLink")?.value || "#").trim();
       const tag = ($("#nTag")?.value || "NEW").trim();
       const heroId = ($("#nHeroId")?.value || "").trim();
-      const img = ($("#nImg")?.value || "").trim(); // ถ้าในฟอร์มมี input id="nImg"
-      const time = new Date().toLocaleString("th-TH");
 
+      // ✅ รองรับทั้งมี/ไม่มีช่อง nImg ในฟอร์ม
+      const imgEl = $("#nImg");
+      const img = imgEl ? (imgEl.value || "").trim() : "";
+
+      const time = new Date().toLocaleString("th-TH");
       if (!title) return alert("ต้องใส่หัวข้อข่าวก่อน");
 
-      const raw = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []);
-      const list = Array.isArray(raw) ? raw : [];
+      const list = getStoredNewsRaw();
       list.push({ id: Date.now(), title, excerpt, category, link, tag, heroId, img, time });
       setNews(list);
 
@@ -818,13 +822,17 @@ console.log("app.js RUNNING ✅");
     });
   }
 
-  // ===== Run =====
-  updateAdminUI();
-  renderNews();
-  renderFeatured();
-  renderLatest();
-  renderShortcuts();
-  renderAllPage();
-  renderAdminList();
-  bindCommentUI();
+  // ===== Run (กันพังเงียบ) =====
+  try {
+    updateAdminUI();
+    renderNews();
+    renderFeatured();
+    renderLatest();
+    renderShortcuts();
+    renderAllPage();
+    renderAdminList();
+    bindCommentUI();
+  } catch (err) {
+    console.error("APP CRASH ❌", err);
+  }
 })();
