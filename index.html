@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHAVE NEWS | หน้าแรก</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="home">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <a href="index.html">IHAVE NEWS</a>
+      </div>
+
+      <div class="nav">
+        <a href="index.html" data-page="home">หน้าแรก</a>
+        <a href="tech.html" data-page="tech">เทคโนโลยี</a>
+        <a href="game.html" data-page="game">เกม</a>
+        <a href="sport.html" data-page="sport">กีฬา</a>
+        <a href="all.html" data-page="all">ข่าวทั้งหมด</a>
+        <a href="gallery.html" data-page="gallery">แกลเลอรี</a>
+		<a href="admin.html" data-page="admin">Admin</a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+
+      <!-- LEFT: Hero + Featured + Stats + Latest -->
+      <div>
+        <div class="hero">
+          <div class="tagrow">
+            <span class="tag"><span class="pulse"></span> LIVE UPDATES</span>
+            <span class="tag">สายไอที • เกม • ฮาร์ดแวร์</span>
+          </div>
+
+          <h1>IHAVE NEWS</h1>
+          <p>รวมข่าวเทค/เกม/กีฬา </p>
+
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn" href="all.html" style="text-decoration:none; display:inline-block;">ดูข่าวทั้งหมด</a>
+            
+          </div>
+        </div>
+
+       <div class="section-title">ข่าวเด่น</div>
+<div id="featuredNews" class="featured-hero"></div>
+
+
+       
+
+        <div class="section-title">ข่าวล่าสุด</div>
+        <div class="card">
+          <div class="news-list" id="latestList"></div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="tag" href="all.html" style="text-decoration:none;">ดูข่าวทั้งหมด</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Widget/Shortcuts -->
+      <div class="card widget">
+  <div class="section-title" style="margin:0;">ทางลัด</div>
+
+  <!-- ✅ JS จะมาใส่ข่าว + รูป ที่มึงลงไว้ในระบบ -->
+  <div class="news-list" id="shortcutList"></div>
+  <!-- ===== บทความ (ART) ===== -->
+<div class="section-title" style="margin:14px 0 10px 0;">บทความ</div>
+
+<div class="news-list" id="artList">
+  <a class="news" href="article1.html">
+    <div class="thumb">
+      <img src="https://www.iphone-droid.net/wp-content/uploads/2024/04/nvidia-rtx-50-series-could-launch-in-q4-2024-0.jpg" alt="ART1">
+      <span class="overlay-tag hot">ART 1</span>
+    </div>
+    <div>
+      <h3>RTX 50 Series ก้าวกระโดด GPU ยุคใหม่</h3>
+      <div class="meta">บทความพิเศษ • เทคโนโลยี</div>
+      <p class="excerpt">วิเคราะห์สถาปัตยกรรม ราคา และผลกระทบตลาด</p>
+    </div>
+  </a>
+
+  <a class="news" href="article2.html">
+    <div class="thumb">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=60" alt="ART2">
+      <span class="overlay-tag new">ART 2</span>
+    </div>
+    <div>
+      <h3>เกม Survival มาแรง เล่นยาว ไม่จำเจ</h3>
+      <div class="meta">บทความพิเศษ • เกม</div>
+      <p class="excerpt">รวมแนวเกมเอาตัวรอดที่เล่นกับเพื่อนแล้วโคตรมัน</p>
+    </div>
+  </a>
+</div>
+
+
+  <hr />
+
+  <div class="pillrow">
+    <a class="tag" href="tech.html" style="text-decoration:none;">ไป Tech</a>
+    <a class="tag" href="game.html" style="text-decoration:none;">ไป Game</a>
+    <a class="tag" href="sport.html" style="text-decoration:none;">ไป Sport</a>
+    <a class="tag" href="all.html" style="text-decoration:none;">ข่าวทั้งหมด</a>
+  </div>
+</div>
+  </div>
+ 
+
+
+
+  <div class="footer">© 2026 IHAVE NEWS</div>
+  <script src="app.js"></script>
+</body>
+</html>

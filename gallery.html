@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHAVE NEWS | แกลเลอรี</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="gallery">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <a href="index.html">IHAVE NEWS</a>
+      </div>
+
+      <div class="nav">
+        <a href="index.html" data-page="home">หน้าแรก</a>
+        <a href="tech.html" data-page="tech">เทคโนโลยี</a>
+        <a href="game.html" data-page="game">เกม</a>
+        <a href="sport.html" data-page="sport">กีฬา</a>
+        <a href="all.html" data-page="all">ข่าวทั้งหมด</a>
+        <a href="gallery.html" data-page="gallery">แกลเลอรี</a>
+        <a href="admin.html" data-page="admin">Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="tagrow">
+        <span class="tag"><span class="pulse"></span> GALLERY</span>
+        <span class="tag">อัปโหลดรูปปก / แบนเนอร์ (เฉพาะแอดมิน)</span>
+      </div>
+      <h1>แกลเลอรีรูป</h1>
+      
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="admin.html" style="text-decoration:none;">ไปหน้า Admin</a>
+        <a class="tag" href="index.html" style="text-decoration:none;">กลับหน้าแรก</a>
+      </div>
+    </div>
+
+   
+
+    <!-- UPLOADER (ซ่อนถ้าไม่ใช่แอดมิน) -->
+    <div id="uploaderWrap" style="display:none;">
+      <div class="section-title">อัปโหลดรูป (Admin Only)</div>
+      <div class="uploader">
+        <label for="articlePick" style="display:block; margin-bottom:8px; color:var(--muted); font-weight:800;">
+          เลือกหน้าที่จะใส่รูป:
+        </label>
+
+        <select id="articlePick"
+          style="width:100%; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); color:var(--text);">
+          <option value="article1">article1 (ข่าวเด่น)</option>
+          <option value="article2">article2 (ข่าวเทค)</option>
+          <option value="tech">หน้า Tech (แบนเนอร์หมวด)</option>
+          <option value="game">หน้า Game (แบนเนอร์หมวด)</option>
+          <option value="sport">หน้า Sport (แบนเนอร์หมวด)</option>
+        </select>
+
+        <div style="height:12px;"></div>
+
+        <input id="imgInput" type="file" accept="image/*" multiple
+          style="width:100%; padding:12px; border-radius:14px; border:1px dashed rgba(0,229,255,.35); background:rgba(0,229,255,.05); color:var(--muted);">
+
+        <p style="color:var(--muted); margin:10px 0 0 0;">
+          * แนะนำรูปไม่เกิน <b>900KB</b> ต่อรูป (LocalStorage จำกัด)
+        </p>
+
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" id="clearGallery" type="button">ล้างรูปทั้งหมด</button>
+          <a class="tag" href="article1.html" style="text-decoration:none;">ไป article1</a>
+          <a class="tag" href="article2.html" style="text-decoration:none;">ไป article2</a>
+          <a class="tag" href="tech.html" style="text-decoration:none;">ไป Tech</a>
+          <a class="tag" href="game.html" style="text-decoration:none;">ไป Game</a>
+          <a class="tag" href="sport.html" style="text-decoration:none;">ไป Sport</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="section-title">พรีวิวรูป</div>
+    <div id="preview" class="preview"></div>
+  </div>
+
+  <div class="footer">© 2026 IHAVE NEWS</div>
+
+  <script src="app.js"></script>
+
+  <!-- Hide/Show uploader by admin flag -->
+  <script>
+    (function(){
+      const isAdmin = localStorage.getItem("ihave_is_admin") === "1";
+      const up = document.getElementById("uploaderWrap");
+      const lock = document.getElementById("lockedBox");
+      if (isAdmin) {
+        if (up) up.style.display = "block";
+        if (lock) lock.style.display = "none";
+      } else {
+        if (up) up.style.display = "none";
+        if (lock) lock.style.display = "block";
+      }
+    })();
+  </script>
+</body>
+</html>

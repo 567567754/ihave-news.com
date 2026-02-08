@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHAVE NEWS | Admin</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="admin">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <a href="index.html">IHAVE NEWS</a>
+      </div>
+
+      <div class="nav">
+        <a href="index.html" data-page="home">หน้าแรก</a>
+        <a href="tech.html" data-page="tech">เทคโนโลยี</a>
+        <a href="game.html" data-page="game">เกม</a>
+        <a href="sport.html" data-page="sport">กีฬา</a>
+        <a href="all.html" data-page="all">ข่าวทั้งหมด</a>
+        <a href="gallery.html" data-page="gallery">แกลเลอรี</a>
+		<a href="admin.html" data-page="admin">Admin</a>
+
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="hero">
+      <div class="tagrow">
+        <span class="tag"><span class="pulse"></span> ADMIN PANEL</span>
+        <span class="tag">เพิ่มข่าว • เลือกข่าวเด่น • ลบข่าว</span>
+        <span class="tag" id="adminStatus">🔒 ผู้ชม</span>
+      </div>
+
+     
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <input id="adminPass" type="password" placeholder="ใส่รหัสแอดมิน..." style="
+          background: rgba(255,255,255,.04);
+          border:1px solid var(--line);
+          border-radius: 14px;
+          padding:10px 12px;
+          color: var(--text);
+          outline:none;
+          min-width: min(320px, 100%);
+        ">
+        <button class="btn" id="adminLoginBtn" type="button">เข้าสู่ระบบ</button>
+        <button class="tag" id="adminLogoutBtn" type="button" style="display:none;">ออกจากแอดมิน</button>
+      </div>
+
+      
+    </div>
+
+    <!-- Panel -->
+    <div id="adminPanel" style="display:none;">
+      <div class="section-title">เพิ่มข่าวใหม่</div>
+      <div class="card">
+        <form id="addNewsForm" style="display:grid; gap:10px;">
+          <input id="nTitle" placeholder="หัวข้อข่าว" required style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+          <textarea id="nExcerpt" placeholder="เนื้อหาย่อ (excerpt)" rows="3" style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"></textarea>
+
+          <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
+            <select id="nCategory" style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+              <option value="tech">tech</option>
+              <option value="game">game</option>
+              <option value="sport">sport</option>
+            </select>
+
+            <input id="nTag" placeholder="TAG เช่น HOT / NEW" value="NEW"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+          </div>
+
+          <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
+            <input id="nLink" placeholder="ลิงก์ เช่น article1.html หรือ #"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+            <select id="nHeroId"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+              <option value="">(ไม่ใช้รูป)</option>
+              <option value="article1">article1</option>
+              <option value="article2">article2</option>
+              <option value="tech">tech</option>
+              <option value="game">game</option>
+              <option value="sport">sport</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <button class="btn" type="submit">บันทึกข่าว</button>
+            <a class="tag" href="gallery.html" style="text-decoration:none;">ไปอัปโหลดรูป (ผูก heroId)</a>
+            <a class="tag" href="all.html" style="text-decoration:none;">ไปหน้าข่าวทั้งหมด</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="section-title">จัดการข่าว (⭐ เด่น / ลบ)</div>
+      <div class="card">
+        <div id="adminNewsList" style="display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© 2026 IHAVE NEWS</div>
+  <script src="app.js"></script>
+</body>
+</html>

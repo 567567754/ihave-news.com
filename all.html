@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IHAVE NEWS | ข่าวทั้งหมด</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="all">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <a href="index.html">IHAVE NEWS</a>
+      </div>
+
+      <div class="nav">
+        <a href="index.html" data-page="home">หน้าแรก</a>
+        <a href="tech.html" data-page="tech">เทคโนโลยี</a>
+        <a href="game.html" data-page="game">เกม</a>
+        <a href="sport.html" data-page="sport">กีฬา</a>
+        <a href="all.html" data-page="all">ข่าวทั้งหมด</a>
+        <a href="gallery.html" data-page="gallery">แกลเลอรี</a>
+        <a href="admin.html" data-page="admin">Admin</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <div class="tagrow">
+        <span class="tag"><span class="pulse"></span> ALL NEWS</span>
+        <span class="tag">กรองหมวด • เลื่อนหน้า • ดูยาว ๆ</span>
+      </div>
+
+      <h1>ข่าวทั้งหมด</h1>
+      <p>รวมข่าวทุกหมวดในเว็บนี้ (ดึงจาก LocalStorage ในเครื่องมึง)</p>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="index.html" style="text-decoration:none; display:inline-block;">กลับหน้าแรก</a>
+        <a class="tag" href="gallery.html" style="text-decoration:none;">+ อัปโหลดรูป/แบนเนอร์</a>
+      </div>
+    </div>
+
+    <div class="all-grid">
+      <!-- LEFT: Filter -->
+      <div class="card all-filter">
+        <div class="section-title" style="margin:0 0 10px 0;">ตัวกรอง</div>
+
+        <div class="pillrow" style="margin-bottom:10px;">
+          <button class="tag" type="button" data-allfilter="all" onclick="window.setAllFilter('all')">ทั้งหมด</button>
+          <button class="tag" type="button" data-allfilter="tech" onclick="window.setAllFilter('tech')">Tech</button>
+          <button class="tag" type="button" data-allfilter="game" onclick="window.setAllFilter('game')">Game</button>
+          <button class="tag" type="button" data-allfilter="sport" onclick="window.setAllFilter('sport')">Sport</button>
+        </div>
+
+        <div class="tag" id="allCount">0 ข่าว</div>
+
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="tag" type="button" onclick="window.setAllFilter('all')">รีเซ็ตตัวกรอง</button>
+          <a class="tag" href="admin.html" style="text-decoration:none;">ไปหน้าแอดมิน</a>
+        </div>
+
+        <hr />
+        <div class="meta">
+          ทิป: ถ้าเป็นแอดมิน กด ⭐ เพื่อเลือกข่าวเด่นได้จากหน้า list / admin
+        </div>
+      </div>
+
+      <!-- RIGHT: List -->
+      <div class="card all-list">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div class="section-title" style="margin:0;">รายการข่าว</div>
+          <a class="tag" href="index.html" style="text-decoration:none;">กลับหน้าแรก</a>
+        </div>
+
+        <!-- ✅ ต้องมี 3 id นี้ -->
+        <div class="news-list" id="allList"></div>
+        <div style="margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;" id="allPager"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">© 2026 IHAVE NEWS</div>
+  <script src="app.js"></script>
+  <button class="tag" data-allfilter="article" onclick="setAllFilter('article')">Article</button>
+
+</body>
+</html>
