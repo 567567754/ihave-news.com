@@ -160,9 +160,9 @@ console.log("app.js RUNNING ✅");
   // =========================================================
   // SEED (ถ้าไม่มีข่าว)
   // =========================================================
-  if (getNews().length === 0 && !localStorage.getItem("ihave_seeded")) {
-    const now = () => new Date().toLocaleString("th-TH");
-    const base = Date.now();
+ // if (getNews().length === 0 && !localStorage.getItem("ihave_seeded")) {
+  //  const now = () => new Date().toLocaleString("th-TH");
+   // const base = Date.now();
 
     setNews([
       { id: base + 1, title: "GPU ราคาลงจริง? รุ่นกลางเริ่มหลุด MSRP", excerpt: "สรุปเหตุผลที่ราคาการ์ดจอเริ่มยอมลง + รุ่นไหนน่าโดนตอนนี้", category: "tech", link: "article1.html", tag: "HOT", img: "https://images.nvidia.com/geforce-com/international/images/geforce-rtx-50-series/geforce-rtx-50-series-ogimage.jpg", heroId: "", time: now() },
@@ -727,3 +727,4 @@ console.log("app.js RUNNING ✅");
   // ✅ เปิดคอมเมนต์ทุกหน้า ที่มี .article (รวม tech/game/sport/article1/article2 ถ้าใช้ layout แบบ article)
   bindCommentUI();
 })();
+
