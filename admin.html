@@ -24,11 +24,11 @@
         <a href="sport.html" data-page="sport">กีฬา</a>
         <a href="all.html" data-page="all">ข่าวทั้งหมด</a>
         <a href="gallery.html" data-page="gallery">แกลเลอรี</a>
-		<a href="admin.html" data-page="admin">Admin</a>
-
+        <a href="admin.html" data-page="admin">Admin</a>
       </div>
     </div>
   </div>
+
   <div class="container">
     <div class="hero">
       <div class="tagrow">
@@ -37,23 +37,42 @@
         <span class="tag" id="adminStatus">🔒 ผู้ชม</span>
       </div>
 
-     
-
       <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <input id="adminPass" type="password" placeholder="ใส่รหัสแอดมิน..." style="
-          background: rgba(255,255,255,.04);
-          border:1px solid var(--line);
-          border-radius: 14px;
-          padding:10px 12px;
-          color: var(--text);
-          outline:none;
-          min-width: min(320px, 100%);
-        ">
+        <input
+          id="adminPass"
+          type="password"
+          autocomplete="current-password"
+          placeholder="ใส่รหัสแอดมิน..."
+          style="
+            background: rgba(255,255,255,.04);
+            border:1px solid var(--line);
+            border-radius: 14px;
+            padding:10px 12px;
+            color: var(--text);
+            outline:none;
+            min-width: min(320px, 100%);
+          "
+        >
         <button class="btn" id="adminLoginBtn" type="button">เข้าสู่ระบบ</button>
         <button class="tag" id="adminLogoutBtn" type="button" style="display:none;">ออกจากแอดมิน</button>
-      </div>
 
-      
+        <!-- ปุ่มช่วยรีเซ็ต -->
+        <button
+          class="tag"
+          id="resetNewsBtn"
+          type="button"
+          style="margin-left:auto;"
+          onclick="(function(){
+            if(!confirm('ล้างข่าวที่เพิ่มเองทั้งหมดในระบบ (ihave_news_items) จริงไหม?\\n* ข่าว DEFAULT จะยังโชว์เหมือนเดิม')) return;
+            localStorage.removeItem('ihave_news_items');
+            localStorage.removeItem('ihave_featured_id');
+            alert('ล้างข่าวในระบบแล้ว ✅');
+            location.reload();
+          })()"
+        >
+          🧹 ล้างข่าวในระบบ
+        </button>
+      </div>
     </div>
 
     <!-- Panel -->
@@ -61,26 +80,51 @@
       <div class="section-title">เพิ่มข่าวใหม่</div>
       <div class="card">
         <form id="addNewsForm" style="display:grid; gap:10px;">
-          <input id="nTitle" placeholder="หัวข้อข่าว" required style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
-          <textarea id="nExcerpt" placeholder="เนื้อหาย่อ (excerpt)" rows="3" style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"></textarea>
+          <input
+            id="nTitle"
+            placeholder="หัวข้อข่าว"
+            required
+            style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+          >
+
+          <textarea
+            id="nExcerpt"
+            placeholder="เนื้อหาย่อ (excerpt)"
+            rows="3"
+            style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+          ></textarea>
 
           <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
-            <select id="nCategory" style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+            <select
+              id="nCategory"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+            >
               <option value="tech">tech</option>
               <option value="game">game</option>
               <option value="sport">sport</option>
+              <option value="article">article</option>
             </select>
 
-            <input id="nTag" placeholder="TAG เช่น HOT / NEW" value="NEW"
-              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
+            <input
+              id="nTag"
+              placeholder="TAG เช่น HOT / NEW / ART 1"
+              value="NEW"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+            >
           </div>
 
           <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
-            <input id="nLink" placeholder="ลิงก์ เช่น article1.html หรือ #"
-              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
-            <select id="nHeroId"
-              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;">
-              <option value="">(ไม่ใช้รูป)</option>
+            <input
+              id="nLink"
+              placeholder="ลิงก์ เช่น article1.html หรือ #"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+            >
+
+            <select
+              id="nHeroId"
+              style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+            >
+              <option value="">(ไม่ใช้ heroId)</option>
               <option value="article1">article1</option>
               <option value="article2">article2</option>
               <option value="tech">tech</option>
@@ -89,10 +133,21 @@
             </select>
           </div>
 
+          <!-- ✅ อันนี้สำคัญ: app.js มีอ่าน #nImg แต่ไฟล์เดิมไม่มี -->
+          <input
+            id="nImg"
+            placeholder="ลิงก์รูป (img URL) เช่น https://..."
+            style="width:100%; background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:14px; padding:10px 12px; color:var(--text); outline:none;"
+          >
+
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <button class="btn" type="submit">บันทึกข่าว</button>
             <a class="tag" href="gallery.html" style="text-decoration:none;">ไปอัปโหลดรูป (ผูก heroId)</a>
             <a class="tag" href="all.html" style="text-decoration:none;">ไปหน้าข่าวทั้งหมด</a>
+          </div>
+
+          <div class="meta" style="opacity:.85;">
+            * หมายเหตุ: ข่าว DEFAULT ที่เห็นหน้าเว็บ “ยังไม่ใช่ข่าวในระบบ” จนกว่าจะเพิ่มผ่าน Admin
           </div>
         </form>
       </div>
