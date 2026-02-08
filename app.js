@@ -1,8 +1,6 @@
 console.log("app.js RUNNING ✅");
 
 (function () {
-  "use strict";
-
   const $ = (s) => document.querySelector(s);
 
   // ===== Storage Keys =====
@@ -14,8 +12,10 @@ console.log("app.js RUNNING ✅");
   const COMMENTS_KEY = "ihave_comments_map";
   const DEFAULT_TIME_KEY = "ihave_default_time";
 
-  // ===== Menu active =====
+  // ===== Menu active + page flags =====
   const page = (document.body.getAttribute("data-page") || "").trim();
+  const isAdminPage = page === "admin";
+
   document.querySelectorAll(".nav a[data-page]").forEach((a) => {
     if (a.getAttribute("data-page") === page) a.classList.add("active");
   });
@@ -61,8 +61,8 @@ console.log("app.js RUNNING ✅");
   function applyHeroIfAny() {
     const map = getHeroMap();
     ["article1", "article2", "tech", "game", "sport"].forEach((t) => {
-      const el = document.querySelector(`#hero-${t}`);
-      if (el && map[t]) el.innerHTML = `<img src="${map[t]}" alt="hero-${escapeHTML(t)}">`;
+      const el = document.querySelector(#hero-${t});
+      if (el && map[t]) el.innerHTML = <img src="${map[t]}" alt="hero-${escapeHTML(t)}">;
     });
   }
   applyHeroIfAny();
@@ -87,7 +87,7 @@ console.log("app.js RUNNING ✅");
     getGalleryAll().forEach((src) => {
       const box = document.createElement("div");
       box.className = "imgbox";
-      box.innerHTML = `<img src="${src}" alt="uploaded">`;
+      box.innerHTML = <img src="${src}" alt="uploaded">;
       preview.appendChild(box);
     });
   }
@@ -112,7 +112,7 @@ console.log("app.js RUNNING ✅");
 
       for (const f of files) {
         if (f.size > 900 * 1024) {
-          alert(`ไฟล์ "${f.name}" ใหญ่เกินไป (แนะนำ < 900KB)`);
+          alert(ไฟล์ "${f.name}" ใหญ่เกินไป (แนะนำ < 900KB));
           continue;
         }
         const dataUrl = await readAsDataURL(f);
@@ -126,7 +126,7 @@ console.log("app.js RUNNING ✅");
         const map = getHeroMap();
         map[target] = lastDataUrl;
         setHeroMap(map);
-        alert(`ตั้งรูปให้ ${target} แล้ว ✅`);
+        alert(ตั้งรูปให้ ${target} แล้ว ✅);
       }
 
       renderGallery();
@@ -149,94 +149,17 @@ console.log("app.js RUNNING ✅");
   // DEFAULT NEWS (โชว์ได้ แต่ไม่เขียนลง localStorage)
   // =========================================================
   const DEFAULT_NEWS = [
-    {
-      id: 900101,
-      title: "GPU ราคาลงจริง? รุ่นกลางเริ่มหลุด MSRP",
-      excerpt: "สรุปเหตุผลที่ราคาการ์ดจอเริ่มยอมลง + รุ่นไหนน่าโดนตอนนี้",
-      category: "tech",
-      link: "article1.html",
-      tag: "HOT",
-      img: "https://images.nvidia.com/geforce-com/international/images/geforce-rtx-50-series/geforce-rtx-50-series-ogimage.jpg",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900102,
-      title: "SSD NVMe รุ่นคุ้ม 2026: อ่าน/เขียนแรง แต่ไม่ร้อน",
-      excerpt: "เทียบ Gen4/Gen5 + เลือกให้เหมาะกับเกม/งานตัดต่อ",
-      category: "tech",
-      link: "article2.html",
-      tag: "NEW",
-      img: "https://www.kingston.com/dynamic-assets/consumer/hero/ssd/hero-ssd-nv2.jpg",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900201,
-      title: "แพตช์ใหม่ยิงปืน: รีคอยล์โดนเนิร์ฟ/บัฟแบบยกชุด",
-      excerpt: "เปลี่ยน meta ยังไง + ปืน/สกิลที่ควรหยิบเล่นตอนนี้",
-      category: "game",
-      link: "article1.html",
-      tag: "HOT",
-      img: "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/7ce603b55808320bd1a367fc224eba50845bab0c-1920x1080.jpg?auto=format&fit=fill&q=80&w=1184",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900202,
-      title: "เกมเอาตัวรอดมาแรง: เล่นกับเพื่อนแล้วโคตรมัน",
-      excerpt: "รวม 5 เกม Survival ที่คนสตรีมเล่นเยอะ + ข้อดีข้อเสีย",
-      category: "game",
-      link: "article2.html",
-      tag: "NEW",
-      img: "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900301,
-      title: "เกมเดือดเมื่อคืน: พลิกท้ายเกมแบบโคตรช็อก",
-      excerpt: "สรุปไฮไลต์ + จุดเปลี่ยนสำคัญ + ใครเล่นโหดสุด",
-      category: "sport",
-      link: "article1.html",
-      tag: "HOT",
-      img: "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=60",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900302,
-      title: "โปรแกรมนัดถัดไป: งานยาก/งานง่ายของแต่ละทีม",
-      excerpt: "วิเคราะห์คู่แข่ง + ความฟิต + ใครเสี่ยงโดนดรอป",
-      category: "sport",
-      link: "article2.html",
-      tag: "NEW",
-      img: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=60",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900401,
-      title: "RTX 50 Series ก้าวกระโดด GPU ยุคใหม่",
-      excerpt: "วิเคราะห์สถาปัตยกรรม ราคา และผลกระทบตลาด",
-      category: "article",
-      link: "article1.html",
-      tag: "ART 1",
-      img: "https://www.iphone-droid.net/wp-content/uploads/2024/04/nvidia-rtx-50-series-could-launch-in-q4-2024-0.jpg",
-      heroId: "",
-      time: ""
-    },
-    {
-      id: 900402,
-      title: "AI-PC & เทรนด์คอมปี 2026 ที่คนประกอบต้องรู้",
-      excerpt: "สรุปเทรนด์ของแรง: NPU/AI Engine, เลือกคอมให้คุ้ม ไม่หลงสเปก",
-      category: "article",
-      link: "article2.html",
-      tag: "ART 2",
-      img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1200&q=60",
-      heroId: "",
-      time: ""
-    }
+    { id: 900101, title: "GPU ราคาลงจริง? รุ่นกลางเริ่มหลุด MSRP", excerpt: "สรุปเหตุผลที่ราคาการ์ดจอเริ่มยอมลง + รุ่นไหนน่าโดนตอนนี้", category: "tech", link: "article1.html", tag: "HOT", img: "https://images.nvidia.com/geforce-com/international/images/geforce-rtx-50-series/geforce-rtx-50-series-ogimage.jpg", heroId: "", time: "" },
+    { id: 900102, title: "SSD NVMe รุ่นคุ้ม 2026: อ่าน/เขียนแรง แต่ไม่ร้อน", excerpt: "เทียบ Gen4/Gen5 + เลือกให้เหมาะกับเกม/งานตัดต่อ", category: "tech", link: "article2.html", tag: "NEW", img: "https://www.kingston.com/dynamic-assets/consumer/hero/ssd/hero-ssd-nv2.jpg", heroId: "", time: "" },
+
+    { id: 900201, title: "แพตช์ใหม่ยิงปืน: รีคอยล์โดนเนิร์ฟ/บัฟแบบยกชุด", excerpt: "เปลี่ยน meta ยังไง + ปืน/สกิลที่ควรหยิบเล่นตอนนี้", category: "game", link: "article1.html", tag: "HOT", img: "https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/7ce603b55808320bd1a367fc224eba50845bab0c-1920x1080.jpg?auto=format&fit=fill&q=80&w=1184", heroId: "", time: "" },
+    { id: 900202, title: "เกมเอาตัวรอดมาแรง: เล่นกับเพื่อนแล้วโคตรมัน", excerpt: "รวม 5 เกม Survival ที่คนสตรีมเล่นเยอะ + ข้อดีข้อเสีย", category: "game", link: "article2.html", tag: "NEW", img: "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg", heroId: "", time: "" },
+
+    { id: 900301, title: "เกมเดือดเมื่อคืน: พลิกท้ายเกมแบบโคตรช็อก", excerpt: "สรุปไฮไลต์ + จุดเปลี่ยนสำคัญ + ใครเล่นโหดสุด", category: "sport", link: "article1.html", tag: "HOT", img: "https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=60", heroId: "", time: "" },
+    { id: 900302, title: "โปรแกรมนัดถัดไป: งานยาก/งานง่ายของแต่ละทีม", excerpt: "วิเคราะห์คู่แข่ง + ความฟิต + ใครเสี่ยงโดนดรอป", category: "sport", link: "article2.html", tag: "NEW", img: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=60", heroId: "", time: "" },
+
+    { id: 900401, title: "RTX 50 Series ก้าวกระโดด GPU ยุคใหม่", excerpt: "วิเคราะห์สถาปัตยกรรม ราคา และผลกระทบตลาด", category: "article", link: "article1.html", tag: "ART 1", img: "https://www.iphone-droid.net/wp-content/uploads/2024/04/nvidia-rtx-50-series-could-launch-in-q4-2024-0.jpg", heroId: "", time: "" },
+    { id: 900402, title: "AI-PC & เทรนด์คอมปี 2026 ที่คนประกอบต้องรู้", excerpt: "สรุปเทรนด์ของแรง: NPU/AI Engine, เลือกคอมให้คุ้ม ไม่หลงสเปก", category: "article", link: "article2.html", tag: "ART 2", img: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1200&q=60", heroId: "", time: "" }
   ];
 
   // ✅ เวลาของ DEFAULT ให้คงที่ (ไม่เปลี่ยนทุกรีเฟรช)
@@ -261,6 +184,8 @@ console.log("app.js RUNNING ✅");
   // =========================================================
   function getNews() {
     const rawStr = localStorage.getItem(NEWS_KEY);
+
+    // ✅ ยังไม่เคยมีข่าวของผู้ใช้เลย → โชว์ default (แต่ "ไม่เขียนลง localStorage")
     if (!rawStr) return withDefaultTime(DEFAULT_NEWS).slice();
 
     const raw = safeParseJSON(rawStr, []);
@@ -293,19 +218,14 @@ console.log("app.js RUNNING ✅");
   })();
 
   // =========================================================
-  // Featured / delete (ทำกับ "ข่าวจริงใน localStorage" เท่านั้น)
+  // Featured / delete
   // =========================================================
-  function getStoredNewsRaw() {
-    const rawStr = localStorage.getItem(NEWS_KEY);
-    if (!rawStr) return [];
-    const raw = safeParseJSON(rawStr, []);
-    return Array.isArray(raw) ? raw : [];
-  }
-
   window.deleteNews = function (id) {
     if (!confirm("ลบข่าวนี้จริงไหม?")) return;
 
-    const list = getStoredNewsRaw().filter((item) => Number(item.id) !== Number(id));
+    const list = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []).filter(
+      (item) => Number(item.id) !== Number(id)
+    );
     setNews(list);
 
     const fid = Number(localStorage.getItem(FEATURED_KEY) || 0);
@@ -317,15 +237,6 @@ console.log("app.js RUNNING ✅");
   window.setFeatured = function (id) {
     localStorage.setItem(FEATURED_KEY, String(Number(id)));
     alert("ตั้งเป็นข่าวเด่นแล้ว ⭐");
-    location.reload();
-  };
-
-  // (Optional) ปุ่มล้างข่าวจริงทั้งระบบ
-  window.clearStoredNews = function () {
-    if (!confirm("ล้างข่าวที่เพิ่มเองทั้งหมดจริงไหม?")) return;
-    localStorage.removeItem(NEWS_KEY);
-    localStorage.removeItem(FEATURED_KEY);
-    alert("ล้างข่าวในระบบแล้ว ✅ (ยังโชว์ default ได้เหมือนเดิม)");
     location.reload();
   };
 
@@ -345,17 +256,19 @@ console.log("app.js RUNNING ✅");
     else if (tn === "new") cls = "new";
     else cls = "new";
     const label = t ? t.toUpperCase() : "NEW";
-    return `<span class="overlay-tag ${cls}">${escapeHTML(label)}</span>`;
+    return <span class="overlay-tag ${cls}">${escapeHTML(label)}</span>;
   }
 
+  // ✅ ใส่ nid ให้ลิงก์ (ไว้แยกคอมเมนต์แต่ละข่าว)
   function linkWithNid(link, nid) {
     const href = String(link || "#");
     if (href === "#" || !nid) return href;
     if (href.includes("nid=")) return href;
     const join = href.includes("?") ? "&" : "?";
-    return `${href}${join}nid=${encodeURIComponent(String(nid))}`;
+    return ${href}${join}nid=${encodeURIComponent(String(nid))};
   }
 
+  // ===== Card =====
   function makeCard(item) {
     const a = document.createElement("a");
     a.className = "news";
@@ -365,11 +278,13 @@ console.log("app.js RUNNING ✅");
     const img = item.img || ((item.heroId && map[item.heroId]) ? map[item.heroId] : null);
 
     const tagBadge = overlayTagHTML(item.tag);
-    const thumbHTML = img
-      ? `<div class="thumb">${tagBadge}<img src="${escapeHTML(img)}" alt="thumb"></div>`
-      : `<div class="thumb">${tagBadge}</div>`;
 
-    const adminBtns = isAdmin()
+    const thumbHTML = img
+      ? <div class="thumb">${tagBadge}<img src="${escapeHTML(img)}" alt="thumb"></div>
+      : <div class="thumb">${tagBadge}</div>;
+
+    // ✅ สำคัญ: ปุ่มแอดมินแสดง "เฉพาะหน้า admin.html เท่านั้น"
+    const adminBtns = (isAdmin() && isAdminPage)
       ? `
         <button type="button" class="tag" style="margin-left:8px"
           onclick="(function(e){e.preventDefault();e.stopPropagation(); window.setFeatured(${Number(item.id)});})(arguments[0]||window.event);">
@@ -398,12 +313,13 @@ console.log("app.js RUNNING ✅");
     el.innerHTML = "";
     const arr = items.slice().reverse();
     if (!arr.length) {
-      el.innerHTML = `<div class="tag">${escapeHTML(emptyText)}</div>`;
+      el.innerHTML = <div class="tag">${escapeHTML(emptyText)}</div>;
       return;
     }
     arr.forEach((item) => el.appendChild(makeCard(item)));
   }
 
+  // ===== Render lists =====
   function renderNews() {
     const all = getNews();
     fillList(listHome, all, "ยังไม่มีข่าว");
@@ -413,6 +329,7 @@ console.log("app.js RUNNING ✅");
     fillList(listArticle, all.filter((x) => norm(x.category) === "article"), "ยังไม่มีบทความ");
   }
 
+  // ===== Featured =====
   function pickFeatured(all) {
     const fid = Number(localStorage.getItem(FEATURED_KEY) || 0);
     if (fid) {
@@ -454,13 +371,13 @@ console.log("app.js RUNNING ✅");
     const tag = (item.tag || "HOT").toUpperCase();
     const title = escapeHTML(item.title || "");
     const ex = escapeHTML(item.excerpt || "");
-    const meta = `${escapeHTML(item.category || "")} • ${escapeHTML(item.time || "")}`;
+    const meta = ${escapeHTML(item.category || "")} • ${escapeHTML(item.time || "")};
     const href = escapeHTML(linkWithNid(item.link || "#", item.id));
 
     el.className = "featured-hero" + (img ? "" : " is-fallback");
     el.innerHTML = `
       <div class="fh-img">
-        ${img ? `<img src="${escapeHTML(img)}" alt="featured">` : ``}
+        ${img ? <img src="${escapeHTML(img)}" alt="featured"> : ``}
       </div>
       <div class="fh-grad"></div>
 
@@ -469,7 +386,7 @@ console.log("app.js RUNNING ✅");
           <div class="fh-top">
             <span class="fh-tag"><span class="dot"></span> ${escapeHTML(tag)}</span>
             <span class="fh-chip">ข่าวเด่น</span>
-            ${isAdmin() ? `<span class="fh-chip">⭐ เลือกเด่นได้</span>` : `<span class="fh-chip">อัตโนมัติ</span>`}
+            ${isAdmin() ? <span class="fh-chip">⭐ (เปิดแอดมินแล้ว)</span> : `<span class="fh-chip">อัตโนมัติ</span>`}
           </div>
 
           <div class="fh-title">${title}</div>
@@ -485,6 +402,7 @@ console.log("app.js RUNNING ✅");
     `;
   }
 
+  // ===== Latest =====
   function renderLatest() {
     const list = $("#latestList");
     if (!list) return;
@@ -492,12 +410,13 @@ console.log("app.js RUNNING ✅");
     const items = getNews().slice().reverse().slice(0, 5);
     list.innerHTML = "";
     if (!items.length) {
-      list.innerHTML = `<div class="tag">ยังไม่มีข่าว</div>`;
+      list.innerHTML = <div class="tag">ยังไม่มีข่าว</div>;
       return;
     }
     items.forEach((item) => list.appendChild(makeCard(item)));
   }
 
+  // ===== Shortcuts =====
   function renderShortcuts() {
     const box = $("#shortcutList");
     if (!box) return;
@@ -511,7 +430,7 @@ console.log("app.js RUNNING ✅");
 
     box.innerHTML = "";
     if (!tech && !game && !sport) {
-      box.innerHTML = `<div class="tag">ยังไม่มีข่าว</div>`;
+      box.innerHTML = <div class="tag">ยังไม่มีข่าว</div>;
       return;
     }
 
@@ -520,6 +439,7 @@ console.log("app.js RUNNING ✅");
     if (sport) box.appendChild(makeCard(sport));
   }
 
+  // ===== All page =====
   function renderAllPage() {
     const list = $("#allList");
     if (!list) return;
@@ -537,7 +457,7 @@ console.log("app.js RUNNING ✅");
     );
 
     const shown = (cat === "all") ? all : all.filter((x) => norm(x.category) === cat);
-    if (badge) badge.textContent = `${shown.length} ข่าว`;
+    if (badge) badge.textContent = ${shown.length} ข่าว;
 
     const totalPages = Math.max(1, Math.ceil(shown.length / perPage));
     const safePage = Math.min(Math.max(1, pageNum), totalPages);
@@ -548,7 +468,7 @@ console.log("app.js RUNNING ✅");
 
     list.innerHTML = "";
     if (!slice.length) {
-      list.innerHTML = `<div class="tag">ยังไม่มีข่าวในหมวดนี้</div>`;
+      list.innerHTML = <div class="tag">ยังไม่มีข่าวในหมวดนี้</div>;
     } else {
       slice.forEach((item) => list.appendChild(makeCard(item)));
     }
@@ -630,7 +550,7 @@ console.log("app.js RUNNING ✅");
     const arr = Array.isArray(map[key]) ? map[key] : [];
 
     if (!arr.length) {
-      listEl.innerHTML = `<div class="tag">ยังไม่มีคอมเมนต์</div>`;
+      listEl.innerHTML = <div class="tag">ยังไม่มีคอมเมนต์</div>;
       return;
     }
 
@@ -649,8 +569,8 @@ console.log("app.js RUNNING ✅");
       const time = escapeHTML(c.time || "");
       const text = escapeHTML(c.text || "");
 
-      const delBtn = isAdmin()
-        ? `<button class="tag" type="button" style="margin-left:auto;" onclick="window.deleteComment('${escapeHTML(key)}', ${idx})">ลบ</button>`
+      const delBtn = (isAdmin() && isAdminPage)
+        ? <button class="tag" type="button" style="margin-left:auto;" onclick="window.deleteComment('${escapeHTML(key)}', ${idx})">ลบ</button>
         : "";
 
       row.innerHTML = `
@@ -679,7 +599,7 @@ console.log("app.js RUNNING ✅");
 
   function bindCommentUI() {
     const nid = getNidFromURL();
-    const key = nid || (page ? `page:${page}` : "");
+    const key = nid || (page ? page:${page} : "");
     if (!key) return;
 
     const mount = ensureCommentsMount();
@@ -727,7 +647,7 @@ console.log("app.js RUNNING ✅");
   const addForm = $("#addNewsForm");
   const adminList = $("#adminNewsList");
 
-  const ADMIN_PASSWORD = "1234";
+  const ADMIN_PASSWORD = "1234"; // 👈 เปลี่ยนได้
 
   function updateAdminUI() {
     const ok = isAdmin();
@@ -751,6 +671,7 @@ console.log("app.js RUNNING ✅");
       }
     });
   }
+
   if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener("click", () => {
       setAdmin(false);
@@ -764,17 +685,13 @@ console.log("app.js RUNNING ✅");
     if (!adminList) return;
     if (!isAdmin()) return;
 
-    const all = getStoredNewsRaw().slice().reverse();
+    const raw = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []);
+    const all = Array.isArray(raw) ? raw.slice().reverse() : [];
     adminList.innerHTML = "";
 
     if (!all.length) {
-      adminList.innerHTML = `
-        <div class="tag">ยังไม่มีข่าวใน localStorage</div>
-        <div class="meta" style="margin-top:8px;">
-          * ค่า default ที่โชว์หน้าเว็บ “ไม่ถือว่าเป็นข่าวในระบบ” จนกว่าจะเพิ่มผ่าน Admin
-        </div>
-        <button class="tag" type="button" style="margin-top:10px;" onclick="window.clearStoredNews()">ล้างข่าวในระบบ</button>
-      `;
+      adminList.innerHTML = `<div class="tag">ยังไม่มีข่าวใน localStorage</div>
+      <div class="meta" style="margin-top:8px;">* ค่า default ที่โชว์หน้าเว็บ “ไม่ถือว่าเป็นข่าวในระบบ” จนกว่าจะเพิ่มผ่าน Admin</div>`;
       return;
     }
 
@@ -804,15 +721,13 @@ console.log("app.js RUNNING ✅");
       const link = ($("#nLink")?.value || "#").trim();
       const tag = ($("#nTag")?.value || "NEW").trim();
       const heroId = ($("#nHeroId")?.value || "").trim();
-
-      // ✅ รองรับทั้งมี/ไม่มีช่อง nImg ในฟอร์ม
-      const imgEl = $("#nImg");
-      const img = imgEl ? (imgEl.value || "").trim() : "";
-
+      const img = ($("#nImg")?.value || "").trim(); // ถ้ามี input nImg ก็ใช้ / ไม่มี = ว่าง
       const time = new Date().toLocaleString("th-TH");
+
       if (!title) return alert("ต้องใส่หัวข้อข่าวก่อน");
 
-      const list = getStoredNewsRaw();
+      const raw = safeParseJSON(localStorage.getItem(NEWS_KEY) || "[]", []);
+      const list = Array.isArray(raw) ? raw : [];
       list.push({ id: Date.now(), title, excerpt, category, link, tag, heroId, img, time });
       setNews(list);
 
@@ -822,17 +737,13 @@ console.log("app.js RUNNING ✅");
     });
   }
 
-  // ===== Run (กันพังเงียบ) =====
-  try {
-    updateAdminUI();
-    renderNews();
-    renderFeatured();
-    renderLatest();
-    renderShortcuts();
-    renderAllPage();
-    renderAdminList();
-    bindCommentUI();
-  } catch (err) {
-    console.error("APP CRASH ❌", err);
-  }
+  // ===== Run =====
+  updateAdminUI();
+  renderNews();
+  renderFeatured();
+  renderLatest();
+  renderShortcuts();
+  renderAllPage();
+  renderAdminList();
+  bindCommentUI();
 })();
